@@ -1,3 +1,5 @@
 # Hazard-light
 Intro to embedded system lab3.
 Coded in 2017, contributed by Chunguang(Eric) Xie
+Thelanding lights at Sea-Tac are busted, so we have to come up with a new set. In order to show pilots the wind direction across the runways we will build special wind indicators to put at the ends of all runways at Sea-Tac.Your circuit will be given two inputs (SW[0] and SW[1]), which indicates wind direction, and three lights to display the corresponding sequence of lights.
+For each situation, the lights should cycle through the given pattern.  Thus, if the wind is calm, the lights will cycle between the outside lights lit, and the center light lit, over and over.  The right to left and left to right crosswind indicators repeatedly cycle through three patterns each, which has the light “move” from right to left or left to right respectively.The switches will never both be true.  The switches may be changed at any point during the current  cycling  of  the  lights,  and  the  lights  must  switch  over  to  the  new  pattern  as  soon  as possible (however, it can enter into any point in the other pattern’s behaviors).
