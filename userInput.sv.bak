@@ -1,0 +1,47 @@
+
+module userInput(clk, reset, button, out);
+   
+	input logic clk, reset, button;
+	output logic out;
+	
+	// State variables.
+	enum { A, B, C } ps, ns;
+	
+	always_comb begin
+	   case (pps)
+		   A: if (button)               ns = B;
+				else                      ns = A; 
+		   B: if (button)               ns = B;
+				else                      ns = C;
+			C: if (button)               ns = B;
+				else                      ns = A;
+		endcase
+   end
+	
+   // DFFs
+	always_ff@(posedge clk)begin
+	   if (reset)
+		   ps <= A;
+		else
+		   ps <= ns;
+   end	
+	
+	
+	logic result;
+	always_comb begin
+	   case (ps)
+		   A: begin 
+			   result = 0;
+			end 
+			B: begin 
+			   result = 0;
+			end
+			C: begin 
+			   result = 1;
+			end
+	   endcase
+   end
+	
+	assign lightOn = result;
+	
+endmodule 

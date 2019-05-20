@@ -1,0 +1,44 @@
+
+module centerLight (clk, reset, L, R, NL, NR, lightOn);
+   
+	input logic Clk, reset;
+	input logic L, R, NL, NR;
+	output logic lightOn;
+	
+	// State variables.
+	enum { ON, OFF } ps, ns;
+	
+	// Next State logic
+	always_comb begin
+	   case (ps)
+		   ON: if (L&R | ~L&~R)                    ns = ON;
+				else                                 ns = OFF; 
+		  OFF: if (~L&R&NL&~NR | L&~R&~NL&NR)      ns = ON;
+				else                                 ns = OFF;
+		endcase
+   end
+	
+   // DFFs
+	always_ff@(posedge clk)begin
+	   if (reset)
+		   ps <= ON;
+		else
+		   ps <= ns;
+   end	
+	
+	
+	logic result;
+	always_comb begin
+	   case (ps)
+		   ON: begin 
+			   result <= 1;
+			end 
+			OFF: begin 
+			   result <= 0;
+			end
+	   endcase
+   end
+	
+	assign lightOn = result;
+	
+endmodule 

@@ -1,0 +1,20 @@
+
+module normalLight (clk, reset, L, R, NL, NR, lightOn);
+   
+	input logic clk, reset;
+	input logic L, R, NL, NR;
+	output logic lightOn;
+	
+	// State variables.
+	enum { OFF, ON } ps, ns;
+	
+	// Next State logic
+	always_comb begin
+	   case (ps)
+		   ON: if (L&R | ~L&~R)                    ns = ON;
+				else                                 ns = OFF; 
+		  OFF: if (~L&R&NL&~NR | L&~R&~NL&NR)      ns = ON;
+				else                                 ns = OFF;
+		endcase
+   end
+	

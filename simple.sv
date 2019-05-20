@@ -1,0 +1,29 @@
+module simple (clk, reset, w, out);
+   input  logic clk, reset, w;
+	output logic out;
+	
+	// State variables.
+	enum { A, B, C } ps, ns;
+	
+	// Next State logic
+	always_combbegin
+	   case (ps)
+		   A: if (w)ns = B;
+			   elsens = A;
+			B: if (w)ns = C;
+			   elsens = A;
+			C: if (w)ns = C;
+			   elsens = A;
+		endcase
+   end
+   // Output logic-could also be another always, or part of above block.
+	assign out = (ps == C);
+	
+	// DFFs
+	always_ff@(posedge clk)begin
+	   if (reset)
+		   ps <= A;
+		else
+		   ps <= ns;
+   end
+endmodule

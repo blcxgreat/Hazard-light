@@ -1,0 +1,27 @@
+
+module decideWin(leftleds, rightleds, L, R, display);
+   
+	input logic [3:0] leftleds;
+	input logic [3:0] rightleds;
+	input logic L, R;
+	output logic [6:0] display;
+	
+	logic [6:0] temp;
+	always_comb begin
+	   case (leftleds)
+		   4'b1000: if (L&~R)                            temp = 7'b0110000;//3
+				      else                                 temp = 7'b0000000; 
+		  default: temp = 7'b0000000;
+		endcase
+		case (rightleds)
+		   4'b1000: if (~L&R)                            temp = 7'b1000000;//0
+				      else                                 temp = 7'b0000000; 
+		  default: temp = 7'b0000000;
+		endcase 
+   end
+	
+	assign display = temp;
+
+endmodule
+	
+	
